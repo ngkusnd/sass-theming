@@ -1,0 +1,23 @@
+{
+  "name": "npm",
+  "version": "0.1.0",
+  "description": "✨ simple, easy and modern way to organize your themes.",
+  "license": "MIT",
+  "keywords": [
+    "sass",
+    "theme",
+    "theming",
+    "css3",
+    "css variable",
+    "css custom property"
+  ],
+  "main": "_index.scss",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngkusnd/sass-theming.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ngkusnd/sass-theming/issues"
+  },
+  "homepage": "https://github.com/ngkusnd/sass-theming#readme"
+}
