@@ -13,7 +13,8 @@
   ],
   "main": "_index.scss",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "docs": "sassdoc _index.scss -d docs"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "glob": "^7.1.7",
     "jest": "^27.1.0",
     "sass": "^1.38.2",
-    "sass-true": "^6.0.1"
+    "sass-true": "^6.0.1",
+    "sassdoc": "^2.7.3"
   }
 }
