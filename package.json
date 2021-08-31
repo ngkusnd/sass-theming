@@ -12,6 +12,9 @@
     "css custom property"
   ],
   "main": "_index.scss",
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ngkusnd/sass-theming.git"
@@ -19,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/ngkusnd/sass-theming/issues"
   },
-  "homepage": "https://github.com/ngkusnd/sass-theming#readme"
+  "homepage": "https://github.com/ngkusnd/sass-theming#readme",
+  "devDependencies": {
+    "glob": "^7.1.7",
+    "jest": "^27.1.0",
+    "sass": "^1.38.2",
+    "sass-true": "^6.0.1"
+  }
 }
