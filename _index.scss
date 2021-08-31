@@ -1,0 +1,92 @@
+@use "sass:map";
+@use "sass:meta";
+
+/// List of theme.
+///
+/// At least one theme named by 'default'.
+///
+/// @type Map
+/// @prop {Map} default - REQUIRED! default theme.
+$themes: () !default;
+
+// The default theme.
+$_default-theme: ();
+
+// Throws an error if $themes doesn't have the 'default' theme.
+@if (map.has-key($themes, 'default')) {
+  $_default-theme: map.get($themes, 'default');
+} @else {
+  @error "Themes must have at least one theme with the name 'default'.";
+}
+
+/// Get custom property.
+///
+/// @param {String} $property - Property name.
+/// @param {String | List | Number} $fallback [false] - Fallback value for property.
+///
+/// @returns {String} var(--property-name, additional fallback)
+
+@function get($property, $fallback: false) {
+  @if map.has-key($_default-theme, $property) {
+    @return _accessor($property, $fallback);
+  } @else {
+    @warn "The '"+ $property +"' property doesn't exist in the theme.";
+  }
+}
+
+/// Get all custom properties of specific theme.
+///
+/// @param {String} $theme - Theme name.
+///
+/// @content list of all custom properties.
+
+@mixin get-all($theme) {
+  @if (map.has-key($themes, $theme)) {
+    @each $property, $value in map.get($themes, $theme) {
+      #{_notation($property)}: $value;
+    }
+  } @else {
+    @warn "The '"+ $theme +"' theme is not found.";
+  }
+}
+
+/// Override custom property at specific scope.
+///
+/// @param {String} $property - Property name.
+/// @param {String | List | Number} $value - Property value.
+///
+/// @content custom property notation.
+
+@mixin set($property, $value) {
+  @if (map.has-key($_default-theme, $property)) {
+    #{_notation($property)}: $value;
+  } @else {
+    @warn "The '"+ $property +"' property doesn't exist in the theme.";
+  }
+}
+
+/// Transform property to CSS custom property notation.
+///
+/// @access private
+/// @param {String} $string - String to convert
+///
+/// @returns {String}
+
+@function _notation($string) {
+  @return --#{$string};
+}
+
+/// Transform property to CSS custom property accessor.
+///
+/// @access private
+/// @param {String} $string - String to convert
+///
+/// @returns {String}
+
+@function _accessor($string, $fallback) {
+  @if ($fallback) {
+    @return var(--#{$string}, $fallback);
+  } @else {
+    @return var(--#{$string});
+  }
+}

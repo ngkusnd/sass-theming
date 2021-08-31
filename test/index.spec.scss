@@ -1,0 +1,62 @@
+@use 'sass:meta';
+@use 'true' as *;
+@use 'index' as * with (
+  $themes: (
+    "default": (
+      "accent-primary": red,
+      "font-family": ("Segoe UI", sans-serif),
+      "padding": (10px 0)
+    )
+  )
+);
+
+@include describe('[function] get') {
+  @include it('should return property in css var() function') {
+    @include assert-equal(get('accent-primary'), var(--accent-primary));
+  }
+
+  @include it('should return property in css var() function with fallback.') {
+    @include assert-equal(
+      get('accent-primary', (sans-serif, 'Segoe UI')),
+      var(--accent-primary, sans-serif, 'Segoe UI')
+    );
+  }
+}
+
+@include describe('[mixin] get-all') {
+  @include it('should outputs list of custom properties.') {
+    @include assert {
+      @include output {
+        :root {
+          @include get-all('default');
+        }
+      }
+
+      @include expect {
+        :root {
+          --accent-primary: red;
+          --font-family: 'Segoe UI', sans-serif;
+          --padding: 10px 0;
+        }
+      }
+    }
+  }
+}
+
+@include describe('[mixin] set') {
+  @include it('should outputs custom property anotation.') {
+    @include assert {
+      @include output {
+        .button {
+          @include set('accent-primary', orange);
+        }
+      }
+
+      @include expect {
+        .button {
+          --accent-primary: orange;
+        }
+      }
+    }
+  }
+}
