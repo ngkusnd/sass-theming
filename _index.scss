@@ -12,6 +12,9 @@ $themes: () !default;
 // The default theme.
 $_default-theme: ();
 
+// For development and testing.
+$_is-development: false !default;
+
 // Throws an error if $themes doesn't have the 'default' theme.
 @if (map.has-key($themes, 'default')) {
   $_default-theme: map.get($themes, 'default');
@@ -30,7 +33,9 @@ $_default-theme: ();
   @if map.has-key($_default-theme, $property) {
     @return _accessor($property, $fallback);
   } @else {
-    @warn "The '"+ $property +"' property doesn't exist in the theme.";
+    @return _warn(
+      "The '" + $property + "' property doesn't exist in the theme."
+    );
   }
 }
 
@@ -46,7 +51,7 @@ $_default-theme: ();
       #{_notation($property)}: $value;
     }
   } @else {
-    @warn "The '"+ $theme +"' theme is not found.";
+    @include _warn("The '" + $theme + "' theme is not found.");
   }
 }
 
@@ -61,7 +66,9 @@ $_default-theme: ();
   @if (map.has-key($_default-theme, $property)) {
     #{_notation($property)}: $value;
   } @else {
-    @warn "The '"+ $property +"' property doesn't exist in the theme.";
+    @include _warn(
+      "The '" + $property + "' property doesn't exist in the theme."
+    );
   }
 }
 
@@ -89,4 +96,21 @@ $_default-theme: ();
   } @else {
     @return var(--#{$string});
   }
+}
+
+@mixin _warn($message, $override: $_is-development) {
+  @if ($override) {
+    content: $message;
+  } @else {
+    @warn $message;
+  }
+}
+
+@function _warn($message, $override: $_is-development) {
+  @if ($override) {
+    @return '#{$message}';
+  }
+
+  @warn $message;
+  @return false;
 }

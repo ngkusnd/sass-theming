@@ -1,6 +1,7 @@
 @use 'sass:meta';
 @use 'true' as *;
 @use 'index' as * with (
+  $_is-development: true,
   $themes: (
     "default": (
       "accent-primary": red,
@@ -11,6 +12,13 @@
 );
 
 @include describe('[function] get') {
+  @include it('should warn if property does not exist in theme') {
+    @include assert-equal(
+      get('accent-tertiary'),
+      "The 'accent-tertiary' property doesn't exist in the theme."
+    );
+  }
+
   @include it('should return property in css var() function') {
     @include assert-equal(get('accent-primary'), var(--accent-primary));
   }
@@ -24,6 +32,22 @@
 }
 
 @include describe('[mixin] get-all') {
+  @include it('should warn if theme does not exist.') {
+    @include assert {
+      @include output {
+        :root {
+          @include get-all('dark');
+        }
+      }
+
+      @include expect {
+        :root {
+          content: "The 'dark' theme is not found.";
+        }
+      }
+    }
+  }
+
   @include it('should outputs list of custom properties.') {
     @include assert {
       @include output {
@@ -44,6 +68,22 @@
 }
 
 @include describe('[mixin] set') {
+  @include it('should warn if property does not exist.') {
+    @include assert {
+      @include output {
+        button {
+          @include set('accent-tertiary', black);
+        }
+      }
+
+      @include expect {
+        button {
+          content: "The 'accent-tertiary' property doesn't exist in the theme.";
+        }
+      }
+    }
+  }
+
   @include it('should outputs custom property anotation.') {
     @include assert {
       @include output {
