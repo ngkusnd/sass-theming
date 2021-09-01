@@ -3,7 +3,6 @@
   <p align="center">simple, easy and modern way to organize your themes with the harness of CSS custom properties.</p>
   <div align="center">
     <img src="https://img.shields.io/npm/v/sass-theming" />
-    <img src="https://img.shields.io/github/commit-activity/m/ngkusnd/sass-theming?label=commit" />
     <img src="https://img.shields.io/github/issues/ngkusnd/sass-theming" />
     <img src="https://img.shields.io/github/stars/ngkusnd/sass-theming" />
     <img src="https://img.shields.io/github/forks/ngkusnd/sass-theming" />
