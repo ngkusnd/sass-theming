@@ -15,7 +15,8 @@
   "files": [],
   "scripts": {
     "test": "jest",
-    "docs": "sassdoc _index.scss -d docs"
+    "docs": "sassdoc _index.scss -d docs",
+    "example": "sass example/_main.scss example/main.css --no-source-map --watch"
   },
   "repository": {
     "type": "git",

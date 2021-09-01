@@ -1,0 +1,9 @@
+@use "../index" as *;
+
+:root {
+  @include get-all('default');
+}
+
+body.dark {
+  @include get-all('dark');
+}

@@ -1,0 +1,15 @@
+@use "../index" with (
+  $themes: (
+    "default": (
+      "foreground": #000,
+      "background": #fff,
+    ),
+    "dark": (
+      "foreground": #fff,
+      "background": #000
+    )
+  )
+);
+
+@use "global";
+@use "button";

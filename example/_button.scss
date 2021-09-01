@@ -1,0 +1,6 @@
+@use "../index" as *;
+
+button {
+  background-color: get('background');
+  color: get('foreground');
+}
