@@ -1,6 +1,13 @@
 <header>
   <h1 align="center">sass-theming ✨</h1>
   <p align="center">simple, easy and modern way to organize your themes with the harness of CSS custom properties.</p>
+  <div align="center">
+    <img src="https://img.shields.io/npm/v/sass-theming" />
+    <img src="https://img.shields.io/github/commit-activity/m/ngkusnd/sass-theming?label=commit" />
+    <img src="https://img.shields.io/github/issues/ngkusnd/sass-theming" />
+    <img src="https://img.shields.io/github/stars/ngkusnd/sass-theming" />
+    <img src="https://img.shields.io/github/forks/ngkusnd/sass-theming" />
+  </div>
 </header>
 
 ---
@@ -52,8 +59,8 @@ _scss/base/global.scss_
 ```scss
 ...
 
-  // activate the 'dark' theme immediately if the body has a 'dark' class name.
-  body.dark {
+// activate the 'dark' theme immediately if the body has a 'dark' class name.
+body.dark {
   @include get-all('dark');
 }
 ```
