@@ -13,9 +13,11 @@
 
 ## 🚀 Getting Started
 
+> ⚠️ **WARNING**: This sass-theming module is still in early development. Prior to the release of the major version v1, the API can be changed without announcement. Use with care 🤗
+
 ### 1. Basic Setup
 
-First, you need to fill in the required configuration. The theme must have at least one theme with the name 'default'.
+First, you need to fill in the required configuration. The theme must have at least one theme with the name `default`.
 
 _scss/main.scss_
 
@@ -23,20 +25,23 @@ _scss/main.scss_
 @use "sass-theming" with (
   $themes: (
     "default": (
+      "accent": (
+        "primary": red,
+        "secondary": blue,
+      ),
       "foreground": #000,
       "background": #fff,
-    ),
-    "dark": (
-      "foreground": #fff,
-      "background": #000,
     )
   )
-)
+);
 
 @use "base/global";
+@use "components/button";
 ```
 
-Then, create styles with `:root` (recommended) or `body` selector for the CSS custom properties on the 'default' theme.
+### 2. Applying Themes
+
+Create styles with `:root` (recommended) or `body` selector for the the `default` theme using `get-all('theme-name')` mixin.
 
 _scss/base/global.scss_
 
@@ -49,24 +54,9 @@ _scss/base/global.scss_
 }
 ```
 
-### 2. Switching Between Themes
+### 3. Getting theme property
 
-You can easily switch between themes with the help of additional dynamic classes. Say you already have a theme switcher button that toggles the 'dark' class to the `body` tag.
-
-_scss/base/global.scss_
-
-```scss
-...
-
-// activate the 'dark' theme immediately if the body has a 'dark' class name.
-body.dark {
-  @include get-all('dark');
-}
-```
-
-### 3. Theme Style Usage
-
-Later, if you want to apply a style to the component, just call the `get()` function with the desired property name as the parameter.
+Just call the `get()` function with the desired property name as a parameter.
 
 _scss/components/button.scss_
 
@@ -78,6 +68,58 @@ button {
   color: get('foreground');
 }
 ```
+
+To get nested property, you can get them with `get('property--nested-property--nested-property-again')`.
+
+So if you want to get the `primary` property that is in the `accent` property (based on the example above), you can use `get('accent--primary')`.
+
+## 💅 Theming
+
+You can easily add additional themes without much pain of code refactoring. Just add the new theme map to the sass-theming configuration. This is an example to add a `dark` theme:
+
+_scss/main.scss_
+
+```scss
+@use "sass-theming" with (
+  $themes: (
+    "default": (
+      "accent": (
+        "primary": red,
+        "secondary": blue,
+      ),
+      "foreground": #000,
+      "background": #fff,
+    ),
+    "dark": (
+      "accent": (
+        "primary": darkred,
+        "secondary": darkblue,
+      ),
+      "foreground": #fff,
+      "background": #000,
+    )
+  )
+);
+
+...
+```
+
+As you can see, the only prerequisite for theme configuration is that the structure and property names of the theme **must be the same as the default theme**.
+
+Now you can switch between themes with the help of additional dynamic classes. Say you already have a theme toggle switcher that toggles the `dark` class to the `body` tag.
+
+_scss/base/global.scss_
+
+```scss
+...
+
+// set this for 'dark' theme.
+body.dark {
+  @include get-all('dark');
+}
+```
+
+The styles of components (says `button`) will update accordingly if `body` has a `dark` class name, no need to update the components code.
 
 That's it!
 
