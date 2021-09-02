@@ -1,0 +1,17 @@
+@use "sass:list";
+
+/// Check if the list has an element.
+/// @group list
+///
+/// @param {List} $list - List.
+/// @param {String} $element - Element to be checked.
+///
+/// @returns {Boolean} - Returns true if the element exists in the list.
+
+@function has($list, $element) {
+  @if (list.index($list, $element) != null) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}

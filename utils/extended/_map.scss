@@ -1,0 +1,46 @@
+@use "sass:map";
+
+/// Flatten key-value pairs of maps within a map to a single map.
+/// @group map
+///
+/// @example scss
+///   flatten(
+///     (
+///       "first": "content-first",
+///       "second": (
+///         "first": "content-second-first",
+///       )
+///     )
+///   );
+///   // ("first": "content-first", "second--first": "content-second-first")
+///
+/// @param {Map} $map - Map
+/// @param {String} $separator [--] - The separator between map keys, default to --.
+/// @param {String} $_parent-key - Used for recursion only.
+///
+/// @returns {Map} - Returns flattened map.
+
+@function flatten($map, $separator: '--', $_parent-key: '') {
+  $scope: ();
+
+  @each $key, $value in $map {
+    @if ($_parent-key != '') {
+      $key: $_parent-key + $separator + $key;
+    }
+    @if (type-of($value) == map) {
+      $scope: map.merge($scope, flatten($value, $_parent-key: $key));
+    } @else {
+      @if (map.has-key($scope, $key)) {
+        @error "Duplicate key #{$key}.";
+      }
+      $scope: map.merge(
+        $scope,
+        (
+          $key: $value,
+        )
+      );
+    }
+  }
+
+  @return $scope;
+}
