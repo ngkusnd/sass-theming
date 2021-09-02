@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/ngkusnd/sass-theming/compare/v0.2.1...v0.3.0) (2021-09-02)
+
+
+### Features
+
+* add extended features of sass built-in modules ([0b5ea29](https://github.com/ngkusnd/sass-theming/commit/0b5ea2921c69cef06692f6eb8bf893b930f4e1d8))
+* support for nested map properties ([f909452](https://github.com/ngkusnd/sass-theming/commit/f909452d742b410dad41ed0477b337a523d21e8c))
+
 ### 0.2.1 (2021-09-01)
 
 
