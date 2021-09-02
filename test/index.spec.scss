@@ -6,27 +6,44 @@
     "default": (
       "accent-primary": red,
       "font-family": ("Segoe UI", sans-serif),
-      "padding": (10px 0)
+      "padding": (10px 0),
+      "color": (
+        "primary": red,
+        "secondary": blue
+      )
     )
   )
 );
 
 @include describe('[function] get') {
-  @include it('should warn if property does not exist in theme') {
+  @include it('should warn if property does not exist in theme.') {
     @include assert-equal(
       get('accent-tertiary'),
       "The 'accent-tertiary' property doesn't exist in the theme."
     );
   }
 
-  @include it('should return property in css var() function') {
+  @include it('should warn if property does not exist on nested property.') {
+    @include assert-equal(
+      get('color--tertiary'),
+      "The 'color--tertiary' property doesn't exist in the theme."
+    );
+  }
+
+  @include it('should return property in css var() function.') {
     @include assert-equal(get('accent-primary'), var(--accent-primary));
+  }
+
+  @include it(
+    'should return property in css var() function on nested property.'
+  ) {
+    @include assert-equal(get('color--primary'), var(--color--primary));
   }
 
   @include it('should return property in css var() function with fallback.') {
     @include assert-equal(
-      get('accent-primary', (sans-serif, 'Segoe UI')),
-      var(--accent-primary, sans-serif, 'Segoe UI')
+      get('font-family', (sans-serif, 'Segoe UI')),
+      var(--font-family, sans-serif, 'Segoe UI')
     );
   }
 }
@@ -61,6 +78,8 @@
           --accent-primary: red;
           --font-family: 'Segoe UI', sans-serif;
           --padding: 10px 0;
+          --color--primary: red;
+          --color--secondary: blue;
         }
       }
     }
@@ -84,6 +103,22 @@
     }
   }
 
+  @include it('should warn if property does not exist on nested property.') {
+    @include assert {
+      @include output {
+        button {
+          @include set('color--tertiary', black);
+        }
+      }
+
+      @include expect {
+        button {
+          content: "The 'color--tertiary' property doesn't exist in the theme.";
+        }
+      }
+    }
+  }
+
   @include it('should outputs custom property anotation.') {
     @include assert {
       @include output {
@@ -95,6 +130,22 @@
       @include expect {
         .button {
           --accent-primary: orange;
+        }
+      }
+    }
+  }
+
+  @include it('should outputs custom nested property anotation.') {
+    @include assert {
+      @include output {
+        .button {
+          @include set('color--primary', orange);
+        }
+      }
+
+      @include expect {
+        .button {
+          --color--primary: orange;
         }
       }
     }

@@ -1,5 +1,7 @@
 @use "sass:map";
 @use "sass:meta";
+@use "utils/extended/list" as elist;
+@use "utils/functions" as f;
 
 /// List of theme.
 ///
@@ -9,18 +11,19 @@
 /// @prop {Map} default - REQUIRED! default theme.
 $themes: () !default;
 
-// The default theme.
-$_default-theme: ();
+// Throws an error if $themes doesn't have the 'default' theme.
+@if (map.has-key($themes, 'default') == false) {
+  @error "Themes must have at least one theme with the name 'default'.";
+}
+
+// Flatten themes
+$_themes-flatten: f.flatten-themes($themes);
+
+// Available properties
+$_properties: map.keys(map.get($_themes-flatten, 'default'));
 
 // For development and testing.
 $_is-development: false !default;
-
-// Throws an error if $themes doesn't have the 'default' theme.
-@if (map.has-key($themes, 'default')) {
-  $_default-theme: map.get($themes, 'default');
-} @else {
-  @error "Themes must have at least one theme with the name 'default'.";
-}
 
 /// Get custom property.
 ///
@@ -30,8 +33,8 @@ $_is-development: false !default;
 /// @returns {String} var(--property-name, additional fallback)
 
 @function get($property, $fallback: false) {
-  @if map.has-key($_default-theme, $property) {
-    @return _accessor($property, $fallback);
+  @if elist.has($_properties, $property) {
+    @return f.accessor($property, $fallback);
   } @else {
     @return _warn(
       "The '" + $property + "' property doesn't exist in the theme."
@@ -46,9 +49,9 @@ $_is-development: false !default;
 /// @content list of all custom properties.
 
 @mixin get-all($theme) {
-  @if (map.has-key($themes, $theme)) {
-    @each $property, $value in map.get($themes, $theme) {
-      #{_notation($property)}: $value;
+  @if (map.has-key($_themes-flatten, $theme)) {
+    @each $property, $value in map.get($_themes-flatten, $theme) {
+      --#{$property}: #{meta.inspect($value)};
     }
   } @else {
     @include _warn("The '" + $theme + "' theme is not found.");
@@ -63,38 +66,12 @@ $_is-development: false !default;
 /// @content custom property notation.
 
 @mixin set($property, $value) {
-  @if (map.has-key($_default-theme, $property)) {
-    #{_notation($property)}: $value;
+  @if (elist.has($_properties, $property)) {
+    --#{$property}: #{meta.inspect($value)};
   } @else {
     @include _warn(
       "The '" + $property + "' property doesn't exist in the theme."
     );
-  }
-}
-
-/// Transform property to CSS custom property notation.
-///
-/// @access private
-/// @param {String} $string - String to convert
-///
-/// @returns {String}
-
-@function _notation($string) {
-  @return --#{$string};
-}
-
-/// Transform property to CSS custom property accessor.
-///
-/// @access private
-/// @param {String} $string - String to convert
-///
-/// @returns {String}
-
-@function _accessor($string, $fallback) {
-  @if ($fallback) {
-    @return var(--#{$string}, $fallback);
-  } @else {
-    @return var(--#{$string});
   }
 }
 
@@ -112,5 +89,5 @@ $_is-development: false !default;
   }
 
   @warn $message;
-  @return false;
+  @return null;
 }

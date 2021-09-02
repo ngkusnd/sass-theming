@@ -12,7 +12,9 @@
     "css custom property"
   ],
   "main": "_index.scss",
-  "files": [],
+  "files": [
+    "utils"
+  ],
   "scripts": {
     "test": "jest",
     "docs": "sassdoc _index.scss -d docs",

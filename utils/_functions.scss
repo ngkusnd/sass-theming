@@ -1,0 +1,62 @@
+@use "sass:map";
+@use "sass:list";
+@use "./extended/map" as emap;
+@use "./extended/list" as elist;
+@use "./extended/string" as estring;
+
+/// Flattens theme properties.
+///
+/// @see flatten
+
+@function flatten-themes($themes) {
+  $flatten: ();
+
+  @each $theme, $properties in $themes {
+    $flatten: map.merge(
+      $flatten,
+      (
+        $theme: emap.flatten($properties, $separator: '--'),
+      )
+    );
+  }
+
+  @return $flatten;
+}
+
+/// Get actual property based on -- separator.
+///
+/// @access private
+/// @param {String} $property - Property that had -- separator.
+///
+/// @returns {String} - Actual property
+
+@function _get-property($property) {
+  $property: estring.split($property, '--');
+
+  @return list.nth($property, list.length($property));
+}
+
+/// Transform property to CSS custom property notation.
+///
+/// @param {String} $property - Property to transform.
+///
+/// @returns {String}
+
+@function notation($property) {
+  @return --#{$property};
+}
+
+/// Transform property to CSS custom property accessor.
+///
+/// @param {String} $property - Property to transform.
+/// @param $fallback - CSS var() fallback value.
+///
+/// @returns {String}
+
+@function accessor($property, $fallback) {
+  @if ($fallback) {
+    @return var(--#{$property}, $fallback);
+  } @else {
+    @return var(--#{$property});
+  }
+}
