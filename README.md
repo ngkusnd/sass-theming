@@ -2,6 +2,7 @@
   <h1 align="center">sass-theming ✨</h1>
   <p align="center">simple, easy and modern way to organize your themes with the harness of CSS custom properties.</p>
   <div align="center">
+    <img src="https://img.shields.io/codefactor/grade/github/ngkusnd/sass-theming/main" />
     <img src="https://img.shields.io/npm/v/sass-theming" />
     <img src="https://img.shields.io/github/issues/ngkusnd/sass-theming" />
     <img src="https://img.shields.io/github/stars/ngkusnd/sass-theming" />
