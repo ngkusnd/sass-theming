@@ -1,4 +1,5 @@
 @use "../index" with (
+  $separator: "--",
   $themes: (
     "default": (
       "foreground": #000,

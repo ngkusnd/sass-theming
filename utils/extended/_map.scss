@@ -10,17 +10,18 @@
 ///       "second": (
 ///         "first": "content-second-first",
 ///       )
-///     )
+///     ),
+///     "--"
 ///   );
 ///   // ("first": "content-first", "second--first": "content-second-first")
 ///
 /// @param {Map} $map - Map
-/// @param {String} $separator [--] - The separator between map keys, default to --.
+/// @param {String} $separator - The separator between map keys.
 /// @param {String} $_parent-key - Used for recursion only.
 ///
 /// @returns {Map} - Returns flattened map.
 
-@function flatten($map, $separator: '--', $_parent-key: '') {
+@function flatten($map, $separator, $_parent-key: '') {
   $scope: ();
 
   @each $key, $value in $map {
@@ -28,7 +29,7 @@
       $key: $_parent-key + $separator + $key;
     }
     @if (type-of($value) == map) {
-      $scope: map.merge($scope, flatten($value, $_parent-key: $key));
+      $scope: map.merge($scope, flatten($value, $separator, $_parent-key: $key));
     } @else {
       @if (map.has-key($scope, $key)) {
         @error "Duplicate key #{$key}.";

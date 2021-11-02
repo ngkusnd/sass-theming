@@ -3,6 +3,7 @@
 @use 'index' as * with (
   $_is-development: true,
   $prefix: "",
+  $separator: "--",
   $themes: (
     "default": (
       "accent-primary": red,

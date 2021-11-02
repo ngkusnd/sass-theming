@@ -16,13 +16,18 @@ $themes: () !default;
 /// @type String
 $prefix: "st-" !default;
 
+/// Separator for nested properties.
+///
+/// @type String
+$separator: "-" !default;
+
 // Throws an error if $themes doesn't have the 'default' theme.
 @if (map.has-key($themes, 'default') == false) {
   @error "Themes must have at least one theme with the name 'default'.";
 }
 
 // Flatten themes
-$_themes-flatten: f.flatten-themes($themes);
+$_themes-flatten: f.flatten-themes($themes, $separator);
 
 // Available properties
 $_properties: map.keys(map.get($_themes-flatten, 'default'));

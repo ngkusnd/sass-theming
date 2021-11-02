@@ -8,42 +8,19 @@
 ///
 /// @see flatten
 
-@function flatten-themes($themes) {
+@function flatten-themes($themes, $separator) {
   $flatten: ();
 
   @each $theme, $properties in $themes {
     $flatten: map.merge(
       $flatten,
       (
-        $theme: emap.flatten($properties, $separator: '--'),
+        $theme: emap.flatten($properties, $separator),
       )
     );
   }
 
   @return $flatten;
-}
-
-/// Get actual property based on -- separator.
-///
-/// @access private
-/// @param {String} $property - Property that had -- separator.
-///
-/// @returns {String} - Actual property
-
-@function _get-property($property) {
-  $property: estring.split($property, '--');
-
-  @return list.nth($property, list.length($property));
-}
-
-/// Transform property to CSS custom property notation.
-///
-/// @param {String} $property - Property to transform.
-///
-/// @returns {String}
-
-@function notation($property) {
-  @return --#{$property};
 }
 
 /// Transform property to CSS custom property accessor.
