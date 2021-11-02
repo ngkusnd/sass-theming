@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/ngkusnd/sass-theming/compare/v0.3.0...v0.4.0) (2021-11-02)
+
+
+### Features
+
+* support for prefix option ([13c269a](https://github.com/ngkusnd/sass-theming/commit/13c269af9429c668fbb3781140faaa128e4dc965))
+* support for separator option ([11b7f05](https://github.com/ngkusnd/sass-theming/commit/11b7f053d283f78e71ce908ca92f8929d809c3af))
+
 ## [0.3.0](https://github.com/ngkusnd/sass-theming/compare/v0.2.1...v0.3.0) (2021-09-02)
 
 
