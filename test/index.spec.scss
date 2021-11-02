@@ -18,31 +18,31 @@
 );
 
 @include describe('[function] get') {
-  @include it('should warn if property does not exist in theme.') {
+  @include it('Should warn if property does not exist in the theme.') {
     @include assert-equal(
       get('accent-tertiary'),
       "The 'accent-tertiary' property doesn't exist in the theme."
     );
   }
 
-  @include it('should warn if property does not exist on nested property.') {
+  @include it('Should warn if property does not exist on the nested property.') {
     @include assert-equal(
       get('color--tertiary'),
       "The 'color--tertiary' property doesn't exist in the theme."
     );
   }
 
-  @include it('should return property in css var() function.') {
+  @include it('Should return property in CSS var() function.') {
     @include assert-equal(get('accent-primary'), var(--accent-primary));
   }
 
   @include it(
-    'should return property in css var() function on nested property.'
+    'Should return the property in CSS var() function on nested property.'
   ) {
     @include assert-equal(get('color--primary'), var(--color--primary));
   }
 
-  @include it('should return property in css var() function with fallback.') {
+  @include it('Should return property in CSS var() function with fallback.') {
     @include assert-equal(
       get('font-family', (sans-serif, 'Segoe UI')),
       var(--font-family, sans-serif, 'Segoe UI')
@@ -51,7 +51,7 @@
 }
 
 @include describe('[mixin] get-all') {
-  @include it('should warn if theme does not exist.') {
+  @include it('Should warn if a theme does not exist.') {
     @include assert {
       @include output {
         :root {
@@ -67,7 +67,7 @@
     }
   }
 
-  @include it('should outputs list of custom properties.') {
+  @include it('Should outputs list of custom properties.') {
     @include assert {
       @include output {
         :root {
@@ -89,7 +89,7 @@
 }
 
 @include describe('[mixin] set') {
-  @include it('should warn if property does not exist.') {
+  @include it('Should warn if property does not exist.') {
     @include assert {
       @include output {
         button {
@@ -105,7 +105,7 @@
     }
   }
 
-  @include it('should warn if property does not exist on nested property.') {
+  @include it('Should warn if property does not exist on the nested property.') {
     @include assert {
       @include output {
         button {
@@ -121,7 +121,7 @@
     }
   }
 
-  @include it('should outputs custom property anotation.') {
+  @include it('Should outputs custom property annotation.') {
     @include assert {
       @include output {
         .button {
@@ -137,7 +137,7 @@
     }
   }
 
-  @include it('should outputs custom nested property anotation.') {
+  @include it('Should outputs custom nested property annotation.') {
     @include assert {
       @include output {
         .button {

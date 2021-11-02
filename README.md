@@ -14,7 +14,7 @@
 
 ## 🚀 Getting Started
 
-> ⚠️ **WARNING**: This sass-theming module is still in early development. Prior to the release of the major version v1, the API can be changed without announcement. Use with care 🤗
+> ⚠️ **WARNING**: This sass-theming module is still in early development. Before the release of the major version v1, the API can be changed without announcement. Use with care 🤗
 
 ### 1. Basic Setup
 
@@ -33,7 +33,9 @@ _scss/main.scss_
       "foreground": #000,
       "background": #fff,
     )
-  )
+  ),
+  $prefix: "ng-" // custom properties prefix. default to "st-"
+  $separator: "--" // separator for nested properties. default to "-"
 );
 
 @use "base/global";
@@ -72,7 +74,7 @@ button {
 
 To get nested property, you can get them with `get('property--nested-property--nested-property-again')`.
 
-So if you want to get the `primary` property that is in the `accent` property (based on the example above), you can use `get('accent--primary')`.
+So if you want to get the `primary` property in the `accent` property (based on the example above), you can use `get('accent--primary')`.
 
 ## 💅 Theming
 

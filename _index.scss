@@ -3,7 +3,7 @@
 @use "utils/extended/list" as elist;
 @use "utils/functions" as f;
 
-/// List of theme.
+/// List of themes.
 ///
 /// At least one theme named by 'default'.
 ///
@@ -21,15 +21,15 @@ $prefix: "st-" !default;
 /// @type String
 $separator: "-" !default;
 
-// Throws an error if $themes doesn't have the 'default' theme.
+// It throws an error if $themes don't have the 'default' theme.
 @if (map.has-key($themes, 'default') == false) {
   @error "Themes must have at least one theme with the name 'default'.";
 }
 
-// Flatten themes
+// Flatten themes.
 $_themes-flatten: f.flatten-themes($themes, $separator);
 
-// Available properties
+// Available properties.
 $_properties: map.keys(map.get($_themes-flatten, 'default'));
 
 // For development and testing.
@@ -52,11 +52,11 @@ $_is-development: false !default;
   }
 }
 
-/// Get all custom properties of specific theme.
+/// Get all custom properties of a specific theme.
 ///
 /// @param {String} $theme - Theme name.
 ///
-/// @content list of all custom properties.
+/// @content List of all custom properties.
 
 @mixin get-all($theme) {
   @if (map.has-key($_themes-flatten, $theme)) {
@@ -68,12 +68,12 @@ $_is-development: false !default;
   }
 }
 
-/// Override custom property at specific scope.
+/// Override custom property at the specific scope.
 ///
 /// @param {String} $property - Property name.
 /// @param {String | List | Number} $value - Property value.
 ///
-/// @content custom property notation.
+/// @content Custom property notation.
 
 @mixin set($property, $value) {
   @if (elist.has($_properties, $property)) {
