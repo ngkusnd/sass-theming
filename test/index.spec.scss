@@ -2,6 +2,7 @@
 @use 'true' as *;
 @use 'index' as * with (
   $_is-development: true,
+  $prefix: "",
   $themes: (
     "default": (
       "accent-primary": red,

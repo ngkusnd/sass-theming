@@ -53,10 +53,10 @@
 ///
 /// @returns {String}
 
-@function accessor($property, $fallback) {
+@function accessor($property, $fallback, $prefix) {
   @if ($fallback) {
-    @return var(--#{$property}, $fallback);
+    @return var(--#{$prefix}#{$property}, $fallback);
   } @else {
-    @return var(--#{$property});
+    @return var(--#{$prefix}#{$property});
   }
 }

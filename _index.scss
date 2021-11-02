@@ -11,6 +11,11 @@
 /// @prop {Map} default - REQUIRED! default theme.
 $themes: () !default;
 
+/// CSS Custom Properties Prefix.
+///
+/// @type String
+$prefix: "st-" !default;
+
 // Throws an error if $themes doesn't have the 'default' theme.
 @if (map.has-key($themes, 'default') == false) {
   @error "Themes must have at least one theme with the name 'default'.";
@@ -34,7 +39,7 @@ $_is-development: false !default;
 
 @function get($property, $fallback: false) {
   @if elist.has($_properties, $property) {
-    @return f.accessor($property, $fallback);
+    @return f.accessor($property, $fallback, $prefix);
   } @else {
     @return _warn(
       "The '" + $property + "' property doesn't exist in the theme."
@@ -51,7 +56,7 @@ $_is-development: false !default;
 @mixin get-all($theme) {
   @if (map.has-key($_themes-flatten, $theme)) {
     @each $property, $value in map.get($_themes-flatten, $theme) {
-      --#{$property}: #{meta.inspect($value)};
+      --#{$prefix}#{$property}: #{meta.inspect($value)};
     }
   } @else {
     @include _warn("The '" + $theme + "' theme is not found.");
@@ -67,7 +72,7 @@ $_is-development: false !default;
 
 @mixin set($property, $value) {
   @if (elist.has($_properties, $property)) {
-    --#{$property}: #{meta.inspect($value)};
+    --#{$prefix}#{$property}: #{meta.inspect($value)};
   } @else {
     @include _warn(
       "The '" + $property + "' property doesn't exist in the theme."
