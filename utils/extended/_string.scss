@@ -1,27 +1,23 @@
 @use "sass:string";
-@use "sass:list";
 
-/// Split the string into a list.
+/// Replace `$search` with `$replace` in `$string`.
 /// @group string
+/// 
+/// @param {String} $string - String
+/// @param {String} $search - Value to replace.
+/// @param {String} $replace - New value.
 ///
-/// @param {String} $string - String.
-/// @param {String} $separator [" "] - The separator default to spaces.
-///
-/// @returns {List} - Returns the list of split strings.
+/// @returns {String} - Replaced string
 
-@function split($string, $separator: ' ') {
-  $split-arr: ();
+@function replace($string, $search, $replace: '') {
+  $index: string.index($string, $search);
+  
+  @if $index {
+    $done: string.slice($string, 1, $index - 1);
+    $next: string.slice($string, $index + string.length($search));
 
-  $index: string.index($string, $separator);
-
-  @while $index != null {
-    $item: string.slice($string, 1, $index - 1);
-    $split-arr: append($split-arr, $item);
-    $string: string.slice($string, $index + string.length($separator));
-    $index: string.index($string, $separator);
+    @return $done + $replace + replace($next, $search, $replace);
   }
-
-  $split-arr: list.append($split-arr, $string);
-
-  @return $split-arr;
+  
+  @return $string;
 }

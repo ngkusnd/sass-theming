@@ -39,7 +39,7 @@
   @include it(
     'Should return the property in CSS var() function on nested property.'
   ) {
-    @include assert-equal(get('color--primary'), var(--color--primary));
+    @include assert-equal(get('color.primary'), var(--color--primary));
   }
 
   @include it('Should return property in CSS var() function with fallback.') {

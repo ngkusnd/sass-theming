@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "sass:meta";
 @use "utils/extended/list" as elist;
+@use "utils/extended/string" as estring;
 @use "utils/functions" as f;
 
 /// List of themes.
@@ -43,8 +44,10 @@ $_is-development: false !default;
 /// @returns {String} var(--property-name, additional fallback)
 
 @function get($property, $fallback: false) {
-  @if elist.has($_properties, $property) {
-    @return f.accessor($property, $fallback, $prefix);
+  $replaced: estring.replace($property, ".", $separator);
+
+  @if elist.has($_properties, $replaced) {
+    @return f.accessor($replaced, $fallback, $prefix);
   } @else {
     @return _warn(
       "The '" + $property + "' property doesn't exist in the theme."
